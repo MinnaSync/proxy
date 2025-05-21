@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - go build -ldflags "-w -s" -o bin/api-backend.exe
+  start:dev:
+    cmds:
+      - export ENVIRONMENT=development
+      - air --build.cmd "task build" --build.bin ".\\bin\\api-backend.exe"
+    env:
+      ENVIRONMENT: development
+  start:prod:
+    cmds:
+      - task: build
+      - export ENVIRONMENT=production
+      - bin/api-backend.exe
+    env:
+      ENVIRONMENT: production

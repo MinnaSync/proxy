@@ -33,13 +33,13 @@ func ProxYM3U8(c *fiber.Ctx) error {
 	for _, item := range playlist.Items {
 		switch item := item.(type) {
 		case *m3u8.KeyItem:
-			proxyURI := fmt.Sprintf("%s/url/%s", baseUrl, url.QueryEscape(*item.Encryptable.URI))
+			proxyURI := fmt.Sprintf("%s/url/%s", baseUrl, *item.Encryptable.URI)
 			item.Encryptable.URI = &proxyURI
 		case *m3u8.PlaylistItem:
-			proxyURI := fmt.Sprintf("%s/url/%s", baseUrl, url.QueryEscape(item.URI))
+			proxyURI := fmt.Sprintf("%s/url/%s", baseUrl, item.URI)
 			item.URI = proxyURI
 		case *m3u8.SegmentItem:
-			proxyURI := fmt.Sprintf("%s/url/%s", baseUrl, url.QueryEscape(item.Segment))
+			proxyURI := fmt.Sprintf("%s/url/%s", baseUrl, item.Segment)
 			item.Segment = proxyURI
 		}
 	}

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"time"
 
 	"github.com/MinnaSync/proxy/api"
@@ -9,15 +8,9 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
-
 	app := fiber.New()
 
 	app.Use(logger.New())
@@ -33,12 +26,7 @@ func main() {
 		CacheControl: true,
 	}))
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
 	api.Register(app)
 
-	_ = app.Listen(":" + port)
+	_ = app.Listen(":8080")
 }

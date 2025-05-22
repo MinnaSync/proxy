@@ -1,7 +1,6 @@
 package main
 
 import (
-	"strings"
 	"time"
 
 	"github.com/MinnaSync/proxy/api"
@@ -16,10 +15,8 @@ func main() {
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
+		AllowOrigins: "https://minna.gura.sa.com",
 		AllowMethods: "GET,OPTIONS",
-		AllowOriginsFunc: func(origin string) bool {
-			return strings.HasSuffix(origin, ".gura.sa.com")
-		},
 	}))
 	app.Use(cache.New(cache.Config{
 		Next: func(c *fiber.Ctx) bool {

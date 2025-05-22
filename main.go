@@ -15,7 +15,7 @@ func main() {
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*",
+		AllowOrigins: "https://minna.gura.sa.com",
 		AllowMethods: "GET,OPTIONS",
 	}))
 	app.Use(cache.New(cache.Config{

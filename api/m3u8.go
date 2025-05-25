@@ -29,7 +29,12 @@ func ProxYM3U8(c *fiber.Ctx) error {
 		return nil
 	}
 
-	baseUrl := fmt.Sprintf("%s://%s", c.Protocol(), c.Hostname())
+	protocol := c.Get("x-forwarded-proto")
+	if protocol == "" {
+		protocol = "http"
+	}
+
+	baseUrl := fmt.Sprintf("%s://%s", protocol, c.Hostname())
 	for _, item := range playlist.Items {
 		switch item := item.(type) {
 		case *m3u8.KeyItem:

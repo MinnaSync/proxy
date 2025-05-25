@@ -9,8 +9,8 @@ import (
 
 func main() {
 	app := fiber.New(fiber.Config{
-		EnableTrustedProxyCheck: true,
-		ProxyHeader:             fiber.HeaderXForwardedProto,
+		// EnableTrustedProxyCheck: true,
+		// ProxyHeader:             fiber.HeaderXForwardedProto,
 	})
 
 	app.Use(logger.New())

@@ -30,7 +30,7 @@ func ProxYM3U8(c *fiber.Ctx) error {
 	}
 
 	baseUrl := fmt.Sprintf("%s://%s", c.Protocol(), c.Hostname())
-	println(c.Request().Header.Protocol())
+	println(string(c.Request().Header.Protocol()))
 	for _, item := range playlist.Items {
 		switch item := item.(type) {
 		case *m3u8.KeyItem:

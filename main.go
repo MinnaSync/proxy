@@ -11,7 +11,10 @@ import (
 )
 
 func main() {
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		EnableTrustedProxyCheck: true,
+		ProxyHeader:             fiber.HeaderXForwardedFor,
+	})
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{

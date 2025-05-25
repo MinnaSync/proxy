@@ -1,11 +1,8 @@
 package main
 
 import (
-	"time"
-
 	"github.com/MinnaSync/proxy/api"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
@@ -21,13 +18,13 @@ func main() {
 		AllowOrigins: "https://minna.gura.sa.com",
 		AllowMethods: "GET,OPTIONS",
 	}))
-	app.Use(cache.New(cache.Config{
-		Next: func(c *fiber.Ctx) bool {
-			return c.Query("noCache") == "true"
-		},
-		Expiration:   30 * time.Minute,
-		CacheControl: true,
-	}))
+	// app.Use(cache.New(cache.Config{
+	// 	Next: func(c *fiber.Ctx) bool {
+	// 		return c.Query("noCache") == "true"
+	// 	},
+	// 	Expiration:   30 * time.Minute,
+	// 	CacheControl: true,
+	// }))
 
 	api.Register(app)
 

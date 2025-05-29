@@ -46,10 +46,10 @@ func ProxYM3U8(c *fiber.Ctx) error {
 
 	// If the environment is development, assume the protocol is http.
 	var baseUrl string
-	if os.Getenv("ENVIRONMENT") == "development" {
-		baseUrl = fmt.Sprintf("http://%s", c.Hostname())
-	} else {
+	if os.Getenv("ENVIRONMENT") == "production" {
 		baseUrl = fmt.Sprintf("https://%s", c.Hostname())
+	} else {
+		baseUrl = fmt.Sprintf("http://%s", c.Hostname())
 	}
 
 	for _, item := range playlist.Items {

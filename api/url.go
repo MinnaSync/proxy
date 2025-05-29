@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -47,8 +46,6 @@ func ProxYURL(c *fiber.Ctx) error {
 			Error:   err.Error(),
 		})
 	}
-
-	println(fmt.Sprintf("req head:\n%s", c.GetReqHeaders()), fmt.Sprintf("\n\nres head:\n%s", c.GetRespHeaders()))
 
 	c.Status(statusCode)
 	c.Set("Content-Type", contentType)

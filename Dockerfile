@@ -13,7 +13,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/app.linux
 # Setup Final Image
 RUN rm -r /build
 
-EXPOSE 80
-
 # Run
 CMD ["/bin/app.linux"]

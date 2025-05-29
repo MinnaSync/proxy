@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 
 	"github.com/MinnaSync/proxy/internal/logger"
 	"github.com/etherlabsio/go-m3u8/m3u8"
@@ -44,12 +43,12 @@ func ProxYM3U8(c *fiber.Ctx) error {
 		})
 	}
 
-	// If the environment is development, assume the protocol is http.
+	// If the request is from local, assume it's http.
 	var baseUrl string
-	if os.Getenv("ENVIRONMENT") == "production" {
-		baseUrl = fmt.Sprintf("https://%s", c.Hostname())
-	} else {
+	if c.IsFromLocal() {
 		baseUrl = fmt.Sprintf("http://%s", c.Hostname())
+	} else {
+		baseUrl = fmt.Sprintf("https://%s", c.Hostname())
 	}
 
 	for _, item := range playlist.Items {

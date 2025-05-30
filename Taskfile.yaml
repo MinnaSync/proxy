@@ -9,6 +9,7 @@ tasks:
       - air --build.cmd "task build" --build.bin ".\\bin\\api-backend.exe"
     env:
       ENVIRONMENT: development
+      LOG_LEVEL: debug
   start:prod:
     cmds:
       - task: build

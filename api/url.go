@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -11,8 +10,6 @@ import (
 )
 
 func ProxYURL(c *fiber.Ctx) error {
-	logger.Log.Debug(fmt.Sprintf("Request Headers: \n%s", &c.Request().Header))
-
 	urlParam := c.Params("*")
 	parsedUrl, err := url.Parse(urlParam)
 	if err != nil {

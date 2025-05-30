@@ -10,14 +10,22 @@ import (
 var Log *slog.Logger
 
 func init() {
-	logLevel := slog.LevelInfo
+	logLevel := os.Getenv("LOG_LEVEL")
 
-	if os.Getenv("ENVIRONMENT") == "development" {
-		logLevel = slog.LevelDebug
+	var level slog.Level
+	switch logLevel {
+	case "debug":
+		level = slog.LevelDebug
+	case "warn":
+		level = slog.LevelWarn
+	case "error":
+		level = slog.LevelError
+	default:
+		level = slog.LevelInfo
 	}
 
 	prettyHandler := prettylog.NewHandler(&slog.HandlerOptions{
-		Level:       logLevel,
+		Level:       level,
 		AddSource:   true,
 		ReplaceAttr: nil,
 	})

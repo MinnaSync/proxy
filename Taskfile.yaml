@@ -6,7 +6,6 @@ tasks:
       - go build -ldflags "-w -s" -o bin/api-backend.exe
   start:dev:
     cmds:
-      - export ENVIRONMENT=development
       - air --build.cmd "task build" --build.bin ".\\bin\\api-backend.exe"
     env:
       ENVIRONMENT: development

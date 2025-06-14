@@ -19,8 +19,14 @@ func ProxYURL(c *fiber.Ctx) error {
 		})
 	}
 
-	req, _ := http.NewRequest("GET", parsedUrl.String(), nil)
-	resp, err := http.DefaultClient.Do(req)
+	r, err, _ := RequestGroup.Do(parsedUrl.String(), func() (interface{}, error) {
+		req, _ := http.NewRequest("GET", parsedUrl.String(), nil)
+		resp, err := http.DefaultClient.Do(req)
+		return resp, err
+	})
+
+	resp := r.(*http.Response)
+
 	if err != nil {
 		logger.Log.Error("failed to request.", "error", err)
 

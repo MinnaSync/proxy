@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"io"
 	"net/http"
 	"net/url"
@@ -22,7 +23,23 @@ func ProxYURL(c *fiber.Ctx) error {
 	r, err, _ := RequestGroup.Do(parsedUrl.String(), func() (interface{}, error) {
 		req, _ := http.NewRequest("GET", parsedUrl.String(), nil)
 		resp, err := http.DefaultClient.Do(req)
-		return resp, err
+		if err != nil {
+			return nil, err
+		}
+		defer resp.Body.Close()
+
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+
+		bodyClone := io.NopCloser(bytes.NewReader(body))
+
+		respClone := *resp
+		respClone.Body = bodyClone
+		respClone.Header = resp.Header.Clone()
+
+		return &respClone, nil
 	})
 
 	resp := r.(*http.Response)

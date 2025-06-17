@@ -3,11 +3,6 @@ package api
 import (
 	"github.com/MinnaSync/proxy/middleware"
 	"github.com/gofiber/fiber/v2"
-	"golang.org/x/sync/singleflight"
-)
-
-var (
-	RequestGroup = singleflight.Group{}
 )
 
 func Register(app *fiber.App) {

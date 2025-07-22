@@ -2,18 +2,16 @@ package logger
 
 import (
 	"log/slog"
-	"os"
 
+	"github.com/MinnaSync/proxy/config"
 	"github.com/dusted-go/logging/prettylog"
 )
 
 var Log *slog.Logger
 
 func init() {
-	logLevel := os.Getenv("LOG_LEVEL")
-
 	var level slog.Level
-	switch logLevel {
+	switch config.LogLevel {
 	case "debug":
 		level = slog.LevelDebug
 	case "warn":

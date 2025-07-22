@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/MinnaSync/proxy/api"
+	"github.com/MinnaSync/proxy/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -11,11 +12,13 @@ import (
 )
 
 func main() {
+	config.Load()
+
 	app := fiber.New()
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "https://sync.minna.now",
+		AllowOrigins: config.AllowedOrigins,
 		AllowMethods: "GET,OPTIONS",
 	}))
 	app.Use(cache.New(cache.Config{
@@ -28,5 +31,5 @@ func main() {
 
 	api.Register(app)
 
-	_ = app.Listen(":8080")
+	_ = app.Listen(":" + config.Port)
 }

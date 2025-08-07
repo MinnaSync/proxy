@@ -1,34 +1,32 @@
 package config
 
-import "os"
+import (
+	"sync"
 
-var (
-	Port           string
-	Environment    string
-	LogLevel       string
-	AllowedOrigins string
+	"github.com/caarlos0/env/v10"
 )
 
-func Load() {
-	var ok bool
-
-	Port, ok = os.LookupEnv("PORT")
-	if !ok || Port == "" {
-		Port = "8080"
+type (
+	Config struct {
+		Port           string `env:"PORT" envDefault:"8080"`
+		Environment    string `env:"ENVIRONMENT" envDefault:"production"`
+		LogLevel       string `env:"LOG_LEVEL" envDefault:"info"`
+		AllowedOrigins string `env:"ALLOWED_ORIGINS"`
 	}
+)
 
-	Environment, ok = os.LookupEnv("ENVIRONMENT")
-	if !ok || Environment == "" {
-		Environment = "production"
-	}
+var (
+	once sync.Once
 
-	LogLevel, ok = os.LookupEnv("LOG_LEVEL")
-	if !ok || LogLevel == "" {
-		LogLevel = "info"
-	}
+	Conf Config
+)
 
-	AllowedOrigins, ok = os.LookupEnv("ALLOWED_ORIGINS")
-	if !ok || AllowedOrigins == "" {
-		panic("ALLOWED_ORIGINS is not set")
+func load() {
+	if err := env.Parse(&Conf); err != nil {
+		panic(err)
 	}
+}
+
+func init() {
+	once.Do(load)
 }

@@ -3,6 +3,7 @@ module github.com/MinnaSync/proxy
 go 1.23.3
 
 require (
+	github.com/caarlos0/env/v10 v10.0.0
 	github.com/dusted-go/logging v1.3.0
 	github.com/etherlabsio/go-m3u8 v1.0.0
 	github.com/gofiber/fiber/v2 v2.52.6

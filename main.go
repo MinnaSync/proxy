@@ -12,13 +12,11 @@ import (
 )
 
 func main() {
-	config.Load()
-
 	app := fiber.New()
 
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: config.AllowedOrigins,
+		AllowOrigins: config.Conf.AllowedOrigins,
 		AllowMethods: "GET,OPTIONS",
 	}))
 	app.Use(cache.New(cache.Config{
@@ -31,5 +29,5 @@ func main() {
 
 	api.Register(app)
 
-	_ = app.Listen(":" + config.Port)
+	_ = app.Listen(":" + config.Conf.Port)
 }

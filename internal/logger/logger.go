@@ -11,7 +11,7 @@ var Log *slog.Logger
 
 func init() {
 	var level slog.Level
-	switch config.LogLevel {
+	switch config.Conf.LogLevel {
 	case "debug":
 		level = slog.LevelDebug
 	case "warn":
